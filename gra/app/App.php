@@ -1,0 +1,93 @@
+<?php 
+
+namespace App;
+
+class App {
+
+public $title = 'Mon super site';
+private static $_instance;
+private static $db_instance;
+
+public static function getInstance(){
+    if(is_null(self::$_instance)){
+        self::$_instance = new App();
+    }
+
+    return self::$_instance;
+}
+
+public static function getTable($name){
+
+$class_name = '\\App\\Table\\' . ucfirst($name) . 'Table';
+
+    return new $class_name($this->getDB());
+}
+
+public function getDB(){
+
+    $config = Config::getInstance();
+
+    if(is_null($this->db_instance)){
+$this->db_instance =  new MYSQLDatabase($config->get('db_name'), $config->get('db_user'), $config->get('db_pass'), $config->get('db_host'));
+    }
+
+    return $this->db_instance;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// variable qui permet de sauvegarder  la connecsion a la bdd 
+    private static $database;
+
+
+
+
+// Getter qui recupere la connection a la bdd 
+    public static function getDB(){
+     if( self::$database === null){
+         self::$database =  new Database(self::DB_NAME, self::DB_USER, self::DB_PASS, self::DB_HOST);
+     }
+        
+        return self::$database;
+    }
+
+    public static function notFound() {
+        
+   header('HTTP/1.0 404 Not Found');
+   header('Location:index.php?p=404');
+   }
+
+
+  public static function getTitle(){
+
+      return self::$title;
+
+  }
+
+  public static function setTitle($title){
+
+    self::$title = $title;
+    
+}*/
+
+
+
+
+
+
+
+}
